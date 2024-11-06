@@ -1,8 +1,8 @@
 package org.example.restapiendpoints.service;
 
+import org.example.restapiendpoints.exception.NotFound;
 import org.example.restapiendpoints.model.Product;
 import org.example.restapiendpoints.model.Review;
-import org.example.restapiendpoints.repository.OrderRepository;
 import org.example.restapiendpoints.repository.ProductRepository;
 import org.example.restapiendpoints.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class ReviewService {
             review.setProduct(productOptional.get());
             return reviewRepository.save(review);
         } else {
-            throw new RuntimeException("Product not found with id " + review.getProduct().getId());
+            throw new NotFound("Product not found with id " + review.getProduct().getId());
         }
     }
 

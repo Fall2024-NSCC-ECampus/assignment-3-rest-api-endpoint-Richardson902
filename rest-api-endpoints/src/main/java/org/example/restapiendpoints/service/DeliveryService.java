@@ -1,5 +1,6 @@
 package org.example.restapiendpoints.service;
 
+import org.example.restapiendpoints.exception.NotFound;
 import org.example.restapiendpoints.model.Delivery;
 import org.example.restapiendpoints.model.Order;
 import org.example.restapiendpoints.repository.DeliveryRepository;
@@ -42,7 +43,7 @@ public class DeliveryService {
             delivery.setDeliveryStatus(status);
             return deliveryRepository.save(delivery);
         } else {
-            throw new RuntimeException("Delivery not found with id " + id);
+            throw new NotFound("Delivery not found with id " + id);
         }
     }
 }

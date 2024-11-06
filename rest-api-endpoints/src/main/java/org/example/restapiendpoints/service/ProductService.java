@@ -1,5 +1,6 @@
 package org.example.restapiendpoints.service;
 
+import org.example.restapiendpoints.exception.NotFound;
 import org.example.restapiendpoints.model.Product;
 import org.example.restapiendpoints.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ProductService {
         if (productOptional.isPresent()) {
             return productOptional.get();
         } else {
-            throw new RuntimeException("Product not found with id " + id);
+            throw new NotFound("Product not found with id " + id);
         }
     }
 

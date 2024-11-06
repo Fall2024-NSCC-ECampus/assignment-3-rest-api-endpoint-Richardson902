@@ -1,5 +1,7 @@
 package org.example.restapiendpoints.service;
 
+import org.example.restapiendpoints.exception.NotFound;
+import org.example.restapiendpoints.exception.PaymentMismatch;
 import org.example.restapiendpoints.model.Order;
 import org.example.restapiendpoints.model.Product;
 import org.example.restapiendpoints.repository.OrderRepository;
@@ -53,10 +55,10 @@ public class OrderService {
                 deliveryService.addDelivery(order); // automatically initiates a delivery for the order if it is paid
                 return orderRepository.save(order);
             } else {
-                throw new RuntimeException("Amount paid does not match the total price of the order");
+                throw new PaymentMismatch("Amount paid does not match the total price of the order");
             }
         } else {
-            throw new RuntimeException("Order not found with id " + orderId);
+            throw new NotFound("Order not found with id " + orderId);
         }
     }
 

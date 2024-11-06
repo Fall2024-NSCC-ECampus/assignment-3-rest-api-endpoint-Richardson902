@@ -1,7 +1,6 @@
 package org.example.restapiendpoints.restcontroller;
 
 import org.example.restapiendpoints.model.Delivery;
-import org.example.restapiendpoints.model.Order;
 import org.example.restapiendpoints.payload.delivery.StatusUpdateRequest;
 import org.example.restapiendpoints.service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,6 @@ public class DeliveryController {
 
     @Autowired
     private DeliveryService deliveryService;
-
-//    @PostMapping
-//    public ResponseEntity<Delivery> addDelivery(@RequestBody Order order) {
-//        Delivery savedDelivery = deliveryService.addDelivery(order);
-//        return ResponseEntity.ok(savedDelivery);
-//    }
 
     @GetMapping
     public ResponseEntity<List<Delivery>> getAllDeliveries() {
