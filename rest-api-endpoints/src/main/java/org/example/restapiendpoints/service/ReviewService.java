@@ -1,7 +1,9 @@
 package org.example.restapiendpoints.service;
 
+import org.example.restapiendpoints.model.Product;
 import org.example.restapiendpoints.model.Review;
 import org.example.restapiendpoints.repository.OrderRepository;
+import org.example.restapiendpoints.repository.ProductRepository;
 import org.example.restapiendpoints.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +18,19 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    private OrderRepository orderRepository;
+    private ProductRepository productRepository;
 
     public Review addReview(Review review) {
         // If doing it properly, you would want a user entity that has a userId
         // Then reference that ID here along with the product ID to ensure that
         // the user ordered the product before they can review it
-        return reviewRepository.save(review);
+        Optional<Product> productOptional = productRepository.findById(review.getProduct().getId());
+        if (productOptional.isPresent()) {
+            review.setProduct(productOptional.get());
+            return reviewRepository.save(review);
+        } else {
+            throw new RuntimeException("Product not found with id " + review.getProduct().getId());
+        }
     }
 
     public List<Review> getReviews() {
