@@ -19,7 +19,7 @@ public class DeliveryService {
         Delivery delivery = new Delivery();
         delivery.setDeliveryAddress(order.getAddress());
         delivery.setOrder(order);
-        delivery.setDeliveryStatus("PENDING");
+        delivery.setDeliveryStatus("IN TRANSIT");
         return deliveryRepository.save(delivery);
     }
 

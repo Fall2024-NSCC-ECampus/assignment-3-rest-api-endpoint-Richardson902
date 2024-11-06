@@ -28,4 +28,10 @@ public class Order {
 
     @Column(name = "amount", nullable = false)
     private int quantity;
+
+    @Column(name = "total_price", nullable = false)
+    private double totalPrice;
+
+    @Column(name = "payment_status", nullable = false)
+    private String paymentStatus = "PENDING";
 }

@@ -1,6 +1,7 @@
 package org.example.restapiendpoints.restcontroller;
 
 import org.example.restapiendpoints.model.Order;
+import org.example.restapiendpoints.payload.order.PaymentRequest;
 import org.example.restapiendpoints.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,12 @@ public class OrderController {
     public ResponseEntity<Order> placeOrder(@RequestBody Order order) {
         Order savedOrder = orderService.placeOrder(order);
         return ResponseEntity.ok(savedOrder);
+    }
+
+    @PostMapping("/{id}/pay")
+    public ResponseEntity<Order> payForOrder(@PathVariable Long id, @RequestBody PaymentRequest request) {
+        Order order = orderService.payForOrder(id, request.getAmount());
+        return ResponseEntity.ok(order);
     }
 
     @GetMapping

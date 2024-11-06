@@ -30,11 +30,9 @@ public class OrderService {
                 product.setStock(product.getStock() - order.getQuantity());
                 productRepository.save(product);
                 order.setProduct(product); // ensures this bad boy is fully populated so it shows on the post request
-                Order savedOrder = orderRepository.save(order);
+                order.setTotalPrice(product.getPrice() * order.getQuantity());
 
-                deliveryService.addDelivery(savedOrder);
-
-                return savedOrder;
+                return orderRepository.save(order);
 
             } else {
                 throw new RuntimeException("Insufficient stock for product with id " + product.getId());
@@ -43,6 +41,23 @@ public class OrderService {
             throw new RuntimeException("Product not found with id " + order.getProduct().getId());
         }
 
+    }
+
+    public Order payForOrder(Long orderId, double amount) {
+        Optional<Order> orderOptional = orderRepository.findById(orderId);
+        if (orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+
+            if (order.getTotalPrice() == amount) {
+                order.setPaymentStatus("PAID");
+                deliveryService.addDelivery(order); // automatically initiates a delivery for the order if it is paid
+                return orderRepository.save(order);
+            } else {
+                throw new RuntimeException("Amount paid does not match the total price of the order");
+            }
+        } else {
+            throw new RuntimeException("Order not found with id " + orderId);
+        }
     }
 
     public List<Order> getOrders() {
