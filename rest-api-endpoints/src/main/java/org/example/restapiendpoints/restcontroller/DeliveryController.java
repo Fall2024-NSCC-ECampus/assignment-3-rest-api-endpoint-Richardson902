@@ -1,5 +1,6 @@
 package org.example.restapiendpoints.restcontroller;
 
+import jakarta.validation.Valid;
 import org.example.restapiendpoints.model.Delivery;
 import org.example.restapiendpoints.payload.delivery.StatusUpdateRequest;
 import org.example.restapiendpoints.service.DeliveryService;
@@ -36,7 +37,7 @@ public class DeliveryController {
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<Delivery> updateDeliveryStatus(@PathVariable Long id, @RequestBody StatusUpdateRequest request) {
+    public ResponseEntity<Delivery> updateDeliveryStatus(@PathVariable Long id, @Valid @RequestBody StatusUpdateRequest request) {
         Delivery delivery = deliveryService.updateDeliveryStatus(id, request.getStatus());
         return ResponseEntity.ok(delivery);
     }

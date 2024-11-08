@@ -1,5 +1,6 @@
 package org.example.restapiendpoints.restcontroller;
 
+import jakarta.validation.Valid;
 import org.example.restapiendpoints.model.Order;
 import org.example.restapiendpoints.payload.order.PaymentRequest;
 import org.example.restapiendpoints.service.OrderService;
@@ -24,14 +25,13 @@ public class OrderController {
     }
 
     @PostMapping("/{id}/pay")
-    public ResponseEntity<Order> payForOrder(@PathVariable Long id, @RequestBody PaymentRequest request) {
+    public ResponseEntity<Order> payForOrder(@PathVariable Long id, @Valid @RequestBody PaymentRequest request) {
         Order order = orderService.payForOrder(id, request.getAmount());
         return ResponseEntity.ok(order);
     }
 
     @GetMapping
     public ResponseEntity<List<Order>> getOrders() {
-        List<Order> orders = orderService.getOrders();
         return ResponseEntity.ok(orderService.getOrders());
     }
 

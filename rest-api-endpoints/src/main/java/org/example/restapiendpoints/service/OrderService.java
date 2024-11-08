@@ -1,5 +1,6 @@
 package org.example.restapiendpoints.service;
 
+import org.example.restapiendpoints.exception.InsufficientStock;
 import org.example.restapiendpoints.exception.NotFound;
 import org.example.restapiendpoints.exception.PaymentMismatch;
 import org.example.restapiendpoints.model.Order;
@@ -37,10 +38,10 @@ public class OrderService {
                 return orderRepository.save(order);
 
             } else {
-                throw new RuntimeException("Insufficient stock for product with id " + product.getId());
+                throw new InsufficientStock("Insufficient stock for product with id " + product.getId());
             }
         } else {
-            throw new RuntimeException("Product not found with id " + order.getProduct().getId());
+            throw new NotFound("Product not found with id " + order.getProduct().getId());
         }
 
     }

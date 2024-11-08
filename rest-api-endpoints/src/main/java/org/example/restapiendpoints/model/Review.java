@@ -14,7 +14,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "rating", nullable = false)
+    @Column(name = "rating", nullable = false) // could constrain to 1-5. in fact, should.
     private int rating;
 
     @Column(name = "comment", nullable = false)

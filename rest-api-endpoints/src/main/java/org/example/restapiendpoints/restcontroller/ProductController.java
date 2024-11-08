@@ -1,5 +1,6 @@
 package org.example.restapiendpoints.restcontroller;
 
+import jakarta.validation.Valid;
 import org.example.restapiendpoints.model.Product;
 import org.example.restapiendpoints.payload.product.PriceUpdateRequest;
 import org.example.restapiendpoints.payload.product.StockUpdateRequest;
@@ -43,13 +44,13 @@ public class ProductController {
     }
 
     @PutMapping("/{id}/stock")
-    public ResponseEntity<Product> addStock(@PathVariable Long id, @RequestBody StockUpdateRequest request) {
+    public ResponseEntity<Product> addStock(@PathVariable Long id, @Valid @RequestBody StockUpdateRequest request) {
         Product product = productService.addStock(id, request.getQuantity());
         return ResponseEntity.ok(product);
     }
 
     @PutMapping("/{id}/price")
-    public ResponseEntity<Product> updatePrice(@PathVariable Long id, @RequestBody PriceUpdateRequest request) {
+    public ResponseEntity<Product> updatePrice(@PathVariable Long id, @Valid @RequestBody PriceUpdateRequest request) {
         Product product = productService.updatePrice(id, request.getPrice());
         return ResponseEntity.ok(product);
     }
