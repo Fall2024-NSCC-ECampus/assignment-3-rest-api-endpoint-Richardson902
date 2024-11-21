@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class StatusUpdateRequest {
-    @NotBlank
+    @NotBlank(message = "Status is required")
     private String status;
 }
